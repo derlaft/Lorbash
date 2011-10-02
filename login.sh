@@ -9,7 +9,7 @@ source 'api/sqlite.sh'
 mode=$(param a)
 if [ -z $mode ]; then
   source 'api/header.sh'
-  cat html/login.html
+  cat 'html/login.html'
   exit
 fi
 if [ $nick == "anonymous" ]; then
@@ -19,7 +19,7 @@ if [ $nick == "anonymous" ]; then
   if [ $passwd == $post_passwd ]; then
     newsid=$(random_seed)
     source 'api/header.sh' "nick=$post_user" "sid=$newsid"
-    sqlite3 $DBFILE "UPDATE users SET sid='$newsid' WHERE nick='$post_user'"
+    sqlite3 "$DBFILE" "UPDATE users SET sid='$newsid' WHERE nick='$post_user'"
     nick=$post_user
     echo success
   else
