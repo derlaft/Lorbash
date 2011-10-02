@@ -12,9 +12,9 @@ source 'api/login.sh'
 #avaiable rows are:
 # id, nick, passwd, state, sid, posts, score, userinfo, reg
 
-nickname=`param nick`
+nickname=$(param nick)
 cat html/header.html | sed -e "s/@@TITLE@@/$nickname\'s profile/"
-id=`sqlite3 $DBFILE "SELECT id FROM users WHERE nick='$nickname'"`
+id=$(sqlite3 $DBFILE "SELECT id FROM users WHERE nick='$nickname'")
 
 if [ -z $id ]; then
   echo no such user
@@ -24,8 +24,8 @@ fi
 echo User-ID: $id'<br>'
 echo Nickname: $nickname'<br>'
 
-userinfo=`sqlite3 $DBFILE "SELECT userinfo FROM users WHERE nick='$nickname'"`
-reg=`sqlite3 $DBFILE "SELECT reg FROM users WHERE nick='$nickname'"`
+userinfo=$(sqlite3 $DBFILE "SELECT userinfo FROM users WHERE nick='$nickname'")
+reg=$(sqlite3 $DBFILE "SELECT reg FROM users WHERE nick='$nickname'")
 
 if [ -n "$userinfo" ]; then
  echo User-Info: 
