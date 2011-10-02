@@ -28,11 +28,11 @@ userinfo=$(sqlite3 $DBFILE "SELECT userinfo FROM users WHERE nick='$nickname'")
 reg=$(sqlite3 $DBFILE "SELECT reg FROM users WHERE nick='$nickname'")
 
 if [ -n "$userinfo" ]; then
- echo User-Info: 
- echo '<p>'$userinfo'</p>'
+  echo User-Info: 
+  echo '<p>'$userinfo'</p>'
 fi
 if [ -n "$reg" ]; then
- echo Reg-Date: $reg'<br>'
+  echo Reg-Date: $reg'<br>'
 fi
 
 cat 'html/footer.html'
