@@ -13,3 +13,11 @@ function make_array {
 function make_number {
   echo $* | sed -e 's/[^ 0-9]//g'
 }
+
+function get_time {
+  date +%s
+}
+
+function get_time_string {
+  date -d @$@ +"%H:%M:%S %D"
+}
