@@ -33,7 +33,7 @@ if [ -n "$userinfo" ]; then
 fi
 
 if [ -n "$reg" ]; then
-  echo "Reg-Date: $reg<br>"
+  echo "Reg-Date: $(get_time_string $reg)<br>"
 fi
 
 cat 'html/footer.html'
