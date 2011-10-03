@@ -19,5 +19,5 @@ function get_time {
 }
 
 function get_time_string {
-  date -d @$@ +"%H:%M:%S %D"
+  date -d "@$@" +"%H:%M:%S %D"
 }
