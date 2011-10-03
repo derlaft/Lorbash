@@ -1,0 +1,25 @@
+html,body{background-color:#2e3436}
+body{color:#babdb6}
+a{color:#729fcf}
+#hd h1{color:#fff}
+#hd .menu .primary a{color:#e9b96e}
+#hd .menu .secondary a{color:#fcaf3e}
+#bd h2 *{color:#babdb6}
+#bd .tags a{color:#fcaf3e}
+#bd .sign a{color:#8ae234}
+#bd .sign a:visited{color:#8ae234}
+.boxlet{background-color:#272c2d}
+#bd .forum table thead{background-color:#555753}
+#bd .forum table thead a{color:#babdb6}
+#bd .forum table tbody td{border-color:#555753}
+#bd .forum table th{border-color:#555753}
+#bd .forum table tbody td *{color:#eeeeec}
+.messages .msg{background:#272c2d}
+#bd a:visited{color:#babdb6}
+#bd .forum table tbody td a:visited{color:#babdb6}
+#sitetitle{color:white;text-decoration:none}
+#navPath a:visited{color:#729fcf}
+#whois_userpic{background:#272c2d}
+.infoblock{background-color:#272c2d}
+#bd a.navLink:visited{color:#729fcf}
+#bd .nav a:visited{color:#729fcf}

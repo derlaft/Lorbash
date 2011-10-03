@@ -47,7 +47,7 @@ function get_post {
     if [ -n "$parent" ]; then
       parent_author=$(sqlite3 "$DBFILE" "SELECT author FROM posts WHERE id='$parent'")
       parent_date=$(get_time_string "$(sqlite3 "$DBFILE" "SELECT date FROM posts WHERE id='$parent'")")
-      answer="Ответ на <a href=\"gopost.sh?id=$parent\"</a>комментарий $parent_author от $parent_date"
+      answer="Ответ на <a href=\"gopost.sh?id=$parent\">комментарий</a> $parent_author от $parent_date"
     fi
   fi
 
@@ -78,4 +78,11 @@ function get_post {
                                  sed -e "s|'BODY'|$body|g;s|'AUTHOR'|$author|g;s|'DATE'|$date|g" | \
                                                                        sed -e 's/&separator/|/g'
   #echo 1
+}
+
+function get_title {
+  
+  #just return post title
+  post_id=$(make_number $1)
+  sqlite3 "$DBFILE" "SELECT title FROM posts WHERE id='$post_id'"
 }

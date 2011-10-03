@@ -1,0 +1,34 @@
+#!/bin/bash
+
+#viewpost.sh
+
+source 'api/sqlite.sh'
+
+function get_post {
+  #avaiable rows are:
+  # (id, title, body, type, globalparent, parent, data)
+  
+  #first, let's get and id
+  post_id=$(make_number $1)
+  
+  #and check it
+  if [ -z "$post_id" ]; then
+    echo 'invalid number'
+  fi
+  
+  #now, we can get post body
+  body=$(sqlite3 "$DBFILE" "SELECT body FROM posts WHERE id='$post_id'")
+  if [ -z "$body" ]; then
+    echo 'blank message'
+    exit
+  fi
+  
+  
+  #unset vars
+  unset post_id
+  unset body
+  unset type
+  unset globalparent
+  unset parent
+  unset data
+}

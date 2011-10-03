@@ -5,5 +5,19 @@
   content="text/html; charset=UTF-8"
   http-equiv="content-type">
   <title>@@TITLE@@</title>
+  <LINK REL=STYLESHEET TYPE="text/css" HREF="/css/common.css">
+  <LINK REL=STYLESHEET TYPE="text/css" HREF="/css/tango/hover.css">
+  <LINK REL="stylesheet" TYPE="text/css" HREF="/css/tango/combined.css">
+  <LINK REL="stylesheet" TYPE="text/css" HREF="/css/tango/tango-dark.css" TITLE="dark">
+  <script type="text/javascript">
+    $.stylesheetInit();
+    $(document).ready(function() {
+      if ($.browser.msie || ($.browser.opera && $.browser.version < 10.50)) {
+        $('.msg').corner();
+        $('.column .boxlet').corner();
+      }
+    });
+  </script>
   </head>
   <body>
+  

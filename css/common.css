@@ -1,0 +1,72 @@
+.news{border-top:1px solid}
+.newsblog .nav{border:0;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:5px;margin-bottom:0}
+.newsblog2 .nav{border:0;border-top:1px solid;border-bottom:1px solid;padding-top:5px;padding-bottom:5px;margin-bottom:0}
+.entry-body .nav{border:0;padding-top:0;padding-bottom:0;margin-bottom:1em}
+.text{text-align:justify}
+div.entry-userpic{float:left;text-align:center;width:70px}
+div.entry-body{margin-left:75px}
+DIV.column{text-align:center;float:left;width:240px}
+DIV.column2{text-align:center;width:240px;position:absolute;right:0}
+DIV.newsblog{margin-left:-245px;float:right;width:100%}
+.newsblog-in{margin-left:245px;min-width:20em}
+.newsblog-in2{margin-left:245px;margin-right:245px}
+DIV.newsblog2{margin-left:-490px;width:100%;float:right}
+H1{margin-top:0;margin-bottom:5px}
+.messages H2{margin-bottom:5px;margin-top:5px}
+.nav{text-align:center;margin-bottom:1em;margin-top:5px}
+table.nav{width:100%;border-collapse:collapse}
+.msg .reply{font-size:smaller}
+DIV.sign{margin-top:1em;margin-bottom:1em}
+.messages .msg{margin-bottom:1em;padding-bottom:1em;word-wrap:break-word}
+.msg_body{padding-left:.5em;padding-right:.5em}
+.messages .highLighted{border:red solid 1px}
+.messages .msg:target{border:red solid 1px}
+.cloud0{font-size:.5em}
+.cloud1{font-size:.6em}
+.cloud2{font-size:.7em}
+.cloud3{font-size:.8em}
+.cloud4{font-size:.9em}
+.cloud5{font-size:1em}
+.cloud6{font-size:1.1em}
+.cloud7{font-size:1.2em}
+.cloud8{font-size:1.3em}
+.cloud9{font-size:1.4em}
+.cloud10{font-size:1.5em}
+DIV.boxlet H2{width:228px;padding:5px}
+DIV.boxlet{width:238px}
+.boxlet_content{padding-left:.5em;padding-right:.5em}
+.boxlet_content ul{padding-left:0}
+div.quote{border:1px dotted;margin-bottom:1em;margin-right:1em;margin-left:5px;font-style:italic;padding:5px}
+div.quote h3{margin-top:0;margin-bottom:0;font-size:medium;font-style:normal}
+.code{border:1px dotted;margin-bottom:1em;font-family:monospace;white-space:pre}
+pre{overflow:auto;overflow-y:hidden;white-space:pre-wrap;word-wrap:break-word;margin:.5em 1em}
+.error{font-weight:bold;border:1px dotted;margin:1em;padding:1em}
+.message-table td{padding:3px}
+.message-table th{padding:3px 3px 5px;vertical-align:top;text-align:left}
+.message-table td.dateinterval{text-align:right}
+.userpic{float:left;width:150px;padding-left:5px;padding-right:5px;padding-top:5px;text-align:center}
+.tag{font-style:italic}
+input.error{margin:inherit;padding:inherit;border:1px solid #f00;font-weight:inherit}
+textarea.error{margin:inherit;padding:inherit;border:1px solid #f00;font-weight:inherit}
+label.error{margin:inherit inherit inherit 1em;padding:inherit;border:inherit;vertical-align:top;color:#f00}
+#commentForm{margin-top:.5em;font-size:medium}
+.message-w-userpic{padding-left:160px}
+.news .group{font-size:small}
+.news .entry-body{padding-top:5px}
+.news .entry-userpic{padding-top:5px}
+table.poll td{padding-right:1em}
+p{margin-top:5px}
+pre code span{background:inherit!important}
+.nav li{display:inline;margin-left:0!important}
+.nav ul{margin-top:inherit!important;margin-bottom:inherit!important}
+#whois_userpic{float:right}
+#ft{font-size:small;margin-top:1em}
+#ft-info{float:left}
+#ft-buttons{text-align:right}
+.boxlet li{list-style:inside!important;margin-left:0!important}
+.msg{min-width:20em}
+.tags{font-size:small}
+.msg h1{font-size:x-large}
+.sign_more{font-size:small}
+.infoblock{font-size:small;padding:5px;border:1px solid;margin-bottom:1em}
+.infoblock h2{font-size:large;font-weight:bold;margin:0}
