@@ -74,12 +74,8 @@ function get_post {
   date=$(echo "$date" | sed -e 's/|/&separator/g')
   
   #final replace
-  cat 'html/post.html' | sed -e "s|'POST-ID'|$post_id|g" | \
-                         sed -e "s|'ANSWER'|$answer|g" | \
-                         sed -e "s|'TITLE'|$title|g" | \
-                         sed -e "s|'BODY'|$body|g" | \
-                         sed -e "s|'AUTHOR'|$author|g" | \
-                         sed -e "s|'DATE'|date|g" | \
-                         sed -e 's/&separator/|/g'
+  cat 'html/post.html' | sed -e "s|'POST-ID'|$post_id|g;s|'ANSWER'|$answer|g;s|'TITLE'|$title|g" | \
+                                  sed -e "s|'BODY'|$body|g;s|'AUTHOR'|$author|g;s|'DATE'|date|g" | \
+                                                                       sed -e 's/&separator/|/g'
   #echo 1
 }
