@@ -52,7 +52,7 @@ function get_post {
   fi
 
   if [ "$type" == "deleted" ]; then
-    if [ "$1" == "with_deleted" ]; then
+    if [ "$2" == "with_deleted" ]; then
       dreason=$(sqlite3 "$DBFILE" "SELECT dreason FROM posts WHERE id='$post_id'")
       dauthor=$(sqlite3 "$DBFILE" "SELECT dauthor FROM posts WHERE id='$post_id'")
       answer="<b>Сообщение удалено $dauthor по причине '$dreason'</b> $answer"
