@@ -75,7 +75,7 @@ function get_post {
   
   #final replace
   cat 'html/post.html' | sed -e "s|'POST-ID'|$post_id|g;s|'ANSWER'|$answer|g;s|'TITLE'|$title|g" | \
-                                  sed -e "s|'BODY'|$body|g;s|'AUTHOR'|$author|g;s|'DATE'|date|g" | \
+                                 sed -e "s|'BODY'|$body|g;s|'AUTHOR'|$author|g;s|'DATE'|$date|g" | \
                                                                        sed -e 's/&separator/|/g'
   #echo 1
 }
