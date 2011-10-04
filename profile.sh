@@ -16,7 +16,7 @@ page_html 'header' "$nickname\'s profile"
 get_user_vars "$nickname"
 
 if [ -z $id ]; then
-  echo "<p>no such user</p>"
+  echo "<b>no such user</b>"
   exit
 fi
 
@@ -33,3 +33,5 @@ if [ -n "$reg" ]; then
 fi
 
 cat 'html/footer.html'
+
+#so..
