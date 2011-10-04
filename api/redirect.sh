@@ -4,6 +4,7 @@
 
 echo "Content-Type: text/html"
 echo "Location: $1"
+
 if [ $# -gt 1 ]; then
   for i in $@
   do

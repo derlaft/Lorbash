@@ -2,13 +2,10 @@
 
 #thread.sh
 
-source 'api/bashlib.sh'
-source 'api/login.sh'
-source 'api/viewpost.sh'
-source 'api/header.sh'
+source 'api/core.sh' 'header'
 
 thread_id=$(make_number $(param id))
-cat 'html/header.html' | sed -e "s/@@TITLE@@/$(get_title $thread_id)/"
+page_html 'header' "$(get_title $thread_id)"
 
 if [ -z "$thread_id" ]; then
   #let's send very informative message
@@ -29,4 +26,4 @@ else
   
 fi
 
-cat 'html/footer.html'
+page_html 'footer'

@@ -19,3 +19,7 @@ function random_seed {
 function get_password {
   sqlite3 "$DBFILE" "SELECT passwd FROM users WHERE nick='$1'"
 }
+
+function get_state {
+  sqlite3 "$DBFILE" "SELECT state FROM users WHERE nick='$1'"
+}
