@@ -6,23 +6,32 @@
 
 source 'api/core.sh' 'header'
 
-mode=$(param mode)
-
 page_html 'header'
+
+mode=$(param mode)
 
 if [ -z "$mode" ]; then
   page_html 'addpost'
   page_html 'footer'
-else
+fi
 
-  parent=$(param replyto)  
+parent=$(make_number $(param replyto))
+
+if [ "$mode" == 'thread' ]; then
+
+  globalparent="$parent"
+  parent=''
+
+elif [ "$mode" == 'post' ]; then 
 
   ptype=$(check_post $parent)
 
   if [ "$ptype" == 'post' ]; then
-    globalparent=$(get_gparent $parent)
-  elif [ "$ptype" == 'thread' ]; then
+    globalparent=$(get_gparent $parent
+  elif [ "$ptype" == 'thread' ] ; then
     globalparent="$parent"
+    #we dont need parent here
+    parent=''
   else
     page_html 'header' 'failed'
     echo '<b>failed</b>'
@@ -30,8 +39,12 @@ else
     return
   fi
 
-  title=$(param title)
-  body=$(param body)
-  date=$(get_time) 
-
 fi
+
+#no tag support yet
+
+title=$(make_safe $(param title))
+body=$(make_safe $(param body))
+date=$(get_time) 
+
+

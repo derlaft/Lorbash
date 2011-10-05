@@ -47,6 +47,19 @@ elif [ "$1" == 'addpost' ]; then
 elif [ "$1" == 'login' ]; then
 
   cat 'html/login.html'
+elif [ "$1" == 'post' ]; then
+
+  local post_html
+  post_html=$(cat 'html/post.html')
+  
+  post_html="${post_html/"'POST-ID'"/$post_id}"
+  post_html="${post_html/"'ANSWER'"/$answer}"
+  post_html="${post_html/"'TITLE'"/$title}"
+  post_html="${post_html/"'BODY'"/$body}"
+  post_html="${post_html/"'AUTHOR-LINK'"/$author_link}"
+  post_html="${post_html/"'DATE'"/$date}"
+  
+  echo -e "$post_html"
 fi
 
 }

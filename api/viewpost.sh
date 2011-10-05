@@ -37,26 +37,13 @@ function get_post {
   fi
 
   if [ "$type" == "deleted_post" ] || [ "$type" == "deleted_thread" ]; then
-    if [ "$2" == "with_deleted" ]; then
-
-      answer="<b>Сообщение удалено $dauthor по причине '$dreason'</b> $answer"
-    fi
+    answer="<b>Сообщение удалено $dauthor по причине '$dreason'</b> $answer"
   fi
   
   author_link=$(get_userlink "$author")
 
-  #let's prepare fields:
-  #Replace separator
-  
-  answer=$(echo "$answer" |  sed -e 's/|/&separator/g;s/\;/&cp/g')
-  title=$(echo "$title" |  sed -e 's/|/&separator/g;s/\;/&cp/g')
-  body=$(echo "$body" | sed -e 's/|/&separator/g;s/\;/&cp/g')
-  date=$(echo "$date" | sed -e 's/|/&separator/g;s/\;/&cp/g')
-  
-  #final replace
-  cat 'html/post.html' | sed -e "s|'POST-ID'|$post_id|g;s|'ANSWER'|$answer|g;s|'TITLE'|$title|g" | \
-                       sed -e "s|'BODY'|$body|g;s|'AUTHOR-LINK'|$author_link|g;s|'DATE'|$date|g" | \
-                                                            sed -e 's/&separator/|/g;s/&cp/\;/g'
+  page_html 'post'
+
 }
 
 

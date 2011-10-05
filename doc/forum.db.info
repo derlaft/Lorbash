@@ -1,0 +1,6 @@
+USERS:
+	(id, nick, passwd, state, sid, posts, score, userinfo, reg)
+POSTS:
+	(id, title, body, type, tags, minscore, flags, author, globalparent, parent, data, tag, dreason, dauthor)
+FORUMS:
+	(id, name, desc, flags, minscore)

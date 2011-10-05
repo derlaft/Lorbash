@@ -67,7 +67,7 @@ function get_post_vars {
     fi
 
     author=$(sqlite3 "$DBFILE" "SELECT author FROM posts WHERE id='$post_id'")
-    date=$(get_time_string $(sqlite3 "$DBFILE" "SELECT date FROM posts WHERE id='$post_id'"))
+    date=$(get_time_string $(sqlite3 "$DBFILE" "SELECT data FROM posts WHERE id='$post_id'"))
     
     #that's all, heh
   fi
@@ -84,4 +84,26 @@ function get_user_vars {
 function get_user_state {
 
   reg=$(sqlite3 "$DBFILE" "SELECT type FROM users WHERE nick='$1'")
+}
+
+function can_post {
+#usage:
+# post type
+# parent id
+# sender score
+
+if [ "$1" == 'forum' ]; then
+  checked_id=$(sqlite3 "$DBFILE" "SELECT id FROM forums WHERE id='$2'")
+  min_score=$(sqlite3 "$DBFILE" "SELECT minscore FROM forums WHERE id='$2'")
+  
+  if [ "$checked_id" == "$min_score" ]; then
+    if [ -n "$min_score" ]; then
+      if [ "$min_score" -lt "0" ]; then
+        echo
+      fi
+    fi
+  fi
+fi
+  
+  
 }
