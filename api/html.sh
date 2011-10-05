@@ -6,7 +6,7 @@ function get_userlink {
 #just return user-link
   
   if [ -n "$1" ]; then
-    state=$(get_user_state "$1")
+    state=$(get_user_param 'state' "$1")
     if [ "$state" != 'banned' ]; then
       echo "<a href=\"profile.sh?nick=$1\">$1</a>"
     else
@@ -16,13 +16,14 @@ function get_userlink {
 }
 
 function get_welcome {
-  
-  if [ "user" == 'anonymous' ]; then
-    echo 'Hello, <b>anonymous</b>'
+  echo '<div id="loginGreating" class="head">'
+  if [ "$nick" == 'anonymous' ]; then
+    echo 'Hello, <b>anonymous</b> [<a href="login.sh">Log in</a>]'
   else
-    link=$(get_userlink)
-    echo "Hello, <b>$link</b>"
+    link=$(get_userlink $nick)
+    echo "Hello, <b>$link</b> [<a href=\"exit.sh\">x</a>]"
   fi
+  echo '</div>'
 }
 
 function page_html {
@@ -31,35 +32,38 @@ function page_html {
 # $1 - mode (header/footer/some form)
 # $2 - title for header mode
 
-if [ "$1" == 'header' ]; then
-  if [ -z "$2" ]; then
-    title="$TITLE"
-  else
-    title="$TITLE: $2"
+  if [ "$1" == 'header' ]; then
+    if [ -z "$2" ]; then
+      title="$TITLE"
+    else
+      title="$TITLE: $2"
+    fi
+    cat 'html/header.html' | sed -e "s/@@TITLE@@/$title/"
+    echo '<div id="doc3" class="yui-t5">'
+    echo '<div id=hd>'
+    get_welcome
+    echo "<h1><a id=\"sitetitle\" href=\"/\">$SITENAME</a></h1>"
+    echo '</div>'
+  elif [ "$1" == 'footer' ]; then
+    echo '</div>'
+    cat 'html/footer.html'
+  elif [ "$1" == 'addpost' ]; then
+    cat 'html/addpost.html'
+  elif [ "$1" == 'login' ]; then
+    cat 'html/login.html'
+  elif [ "$1" == 'post' ]; then
+
+    local post_html
+    post_html=$(cat 'html/post.html')
+  
+    post_html="${post_html//"'POST-ID'"/$post_id}"
+    post_html="${post_html//"'ANSWER'"/$answer}"
+    post_html="${post_html//"'TITLE'"/$title}"
+    post_html="${post_html//"'BODY'"/$body}"
+    post_html="${post_html//"'AUTHOR-LINK'"/$author_link}"
+    post_html="${post_html//"'DATE'"/$date}"
+  
+    echo -e "$post_html"
   fi
-  cat 'html/header.html' | sed -e "s/@@TITLE@@/$title/"
-elif [ "$1" == 'footer' ]; then
-
-  cat 'html/footer.html'
-elif [ "$1" == 'addpost' ]; then
-
-  cat 'html/addpost.html'
-elif [ "$1" == 'login' ]; then
-
-  cat 'html/login.html'
-elif [ "$1" == 'post' ]; then
-
-  local post_html
-  post_html=$(cat 'html/post.html')
-  
-  post_html="${post_html/"'POST-ID'"/$post_id}"
-  post_html="${post_html/"'ANSWER'"/$answer}"
-  post_html="${post_html/"'TITLE'"/$title}"
-  post_html="${post_html/"'BODY'"/$body}"
-  post_html="${post_html/"'AUTHOR-LINK'"/$author_link}"
-  post_html="${post_html/"'DATE'"/$date}"
-  
-  echo -e "$post_html"
-fi
 
 }

@@ -2,6 +2,4 @@
 
 #exit.sh
 
-source 'api/header.sh' "nick=null" "sid=null"
-
-echo logged out
+source 'api/redirect.sh' 'index.sh' "nick=null" "sid=null"

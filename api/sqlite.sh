@@ -20,7 +20,7 @@ function get_time_string {
 }
 
 function make_safe {
-  echo "$@" | sed -e 's/</&lt\;/g;s/>/&gt\;/g;s/&/&amp\;/g;' 
+  echo "$@" | sed -e 's/</&lt\;/g;s/>/&gt\;/g;s/&/&amp\;/g;s/-/&ndash\;/g' 
 }
 
 function get_title {
@@ -75,35 +75,64 @@ function get_post_vars {
 
 function get_user_vars {
 
-  id=$(sqlite3 "$DBFILE" "SELECT id FROM users WHERE nick='$1'")
-  userinfo=$(sqlite3 "$DBFILE" "SELECT userinfo FROM users WHERE nick='$1'")
-  reg=$(sqlite3 "$DBFILE" "SELECT reg FROM users WHERE nick='$1'")
-  state=$(get_user_state $1)
+  id=$(get_user_param 'id' $1)
+  userinfo=$(get_user_param 'userinfo' $1)
+  reg=$(get_user_param 'reg' $1)
+  score=$(get_user_param 'score' $1)
+  u_state=$(get_user_param 'state' $1)
 }
 
-function get_user_state {
+function get_user_param {
 
-  reg=$(sqlite3 "$DBFILE" "SELECT type FROM users WHERE nick='$1'")
+  sqlite3 "$DBFILE" "SELECT $1 FROM users WHERE nick='$2'"  
 }
 
 function can_post {
+
 #usage:
 # post type
 # parent id
 # sender score
 
-if [ "$1" == 'forum' ]; then
-  checked_id=$(sqlite3 "$DBFILE" "SELECT id FROM forums WHERE id='$2'")
-  min_score=$(sqlite3 "$DBFILE" "SELECT minscore FROM forums WHERE id='$2'")
-  
-  if [ "$checked_id" == "$min_score" ]; then
-    if [ -n "$min_score" ]; then
-      if [ "$min_score" -lt "0" ]; then
-        echo
+
+  if [ "$1" == 'thread' ]; then
+    local checked_id
+    local min_score
+    local score
+    local state
+
+    checked_id=$(sqlite3 "$DBFILE" "SELECT id FROM forums WHERE id='$2'")
+    min_score=$(sqlite3 "$DBFILE" "SELECT minscore FROM forums WHERE id='$2'")
+    score=$(get_user_param 'score' $3)
+    state=$(get_user_param 'state' $3)
+
+    if [ "$checked_id" == "$2" ]; then
+      if [ -n "$min_score" ]; then
+        if (( "$min_score" >= "$score" )) || [ "$state" == "moderator" ]; then
+          echo 'yes'
+        else
+          echo 'no'
+        fi
+      else
+        echo 'yes'
       fi
+    else
+      echo 'no'    
     fi
+  elif [ "$1" == 'post' ]; then
+    can_post 'thread' $(get_gparent "$2") "$3"
   fi
-fi
-  
-  
+}
+
+function insert_post {
+#params:
+# title, body, tags, date, author, type, globalparent, parent
+
+  rows='(title, body, tags, data, author, type, globalparent, parent)'
+  values="('$1', '$2', '$3', '$4', '$5', '$6', '$7', '$8')"
+
+  sqlite3 "$DBFILE" "insert into posts $rows values $values"
+
+#we did it!
+
 }

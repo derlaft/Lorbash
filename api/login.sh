@@ -12,8 +12,12 @@ if [ -n "$user" ] && [ -n "$sid" ]; then
 fi
 [ -z "$nick" ] && nick="anonymous"
 
+unset user
+unset sid
+unset chsid
+
 function random_seed {
-  echo $[ "$RANDOM" * "$RANDOM" ] | sha1sum  | tr ' ' '\n' | sed -n 1p
+  echo "$RANDOM \* $RANDOM" | bc -q | sha1sum  | tr ' ' '\n' | sed -n 1p
 }
 
 function get_password {

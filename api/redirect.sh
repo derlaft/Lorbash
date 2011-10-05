@@ -8,7 +8,7 @@ echo "Location: $1"
 if [ $# -gt 1 ]; then
   for i in $@
   do
-    if [ "$i" == "$1"]; then
+    if [ "$i" == "$1" ]; then
       continue
     fi
     echo "Set-Cookie: $i"
