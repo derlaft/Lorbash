@@ -12,7 +12,7 @@ if [ -n "$post_id" ]; then
     parent=$(make_number $(get_gparent $post_id))
     source 'api/redirect.sh'  "thread.sh?id=$parent#$post_id"
     exit
-  elif [ "$type" == 'thread' ]; then et_
+  elif [ "$type" == 'thread' ]; then
     source 'api/redirect.sh' "thread.sh?id=$post_id#$post_id"
     exit
   fi

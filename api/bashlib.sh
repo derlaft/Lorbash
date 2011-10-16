@@ -61,15 +61,17 @@ if [ -n "${QUERY_STRING}" ]; then
       #
       tmpvalue=${Q#*=}
       tmpvalue=$(echo ${tmpvalue} | \
-                 sed -e 's/%\(..\)/\\\x\1 /g')
-      #echo "Intermediate \$value: ${tmpvalue}" 1>&2
+                 sed -e 's/%\(\)/\\\x/g' | \
+                 tr "+" " ")
+      #echo "Intermediate \$value: ${QUERY_STRING}" 1>&2
   
       #
       # Iterate through tmpvalue and printf each string, and append it to
       # value
       #
-      for i in ${tmpvalue}; do
-          g=$(printf ${i})
+      
+      for i in "${tmpvalue}"; do
+          g=$(printf "${i}")
           value="${value}${g}"
       done
       #value=$(echo ${value})

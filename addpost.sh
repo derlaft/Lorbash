@@ -6,48 +6,27 @@
 
 source 'api/core.sh'
 
+replyto=$(make_number $(param replyto) )
+
+body=$(param body)
+title=$(param title)
 mode=$(param mode)
-parent=$(make_number $(param replyto))
 
-if [ "$mode" == 'thread' ]; then
-
-  globalparent="$parent"
-  parent=''
-  tags=$(make_safe $(param tags))
-
-elif [ "$mode" == 'post' ]; then 
-
-  ptype=$(check_post $parent)
-
-  if [ "$ptype" == 'post' ]; then
-    globalparent=$(get_gparent $parent)
-  elif [ "$ptype" == 'thread' ] ; then
-    globalparent="$parent"
-    #we dont need parent here
-    parent=''
-  else
-    fail_addpost
-  fi
-
+if [ -n "$(param 'preview')" ]; then
+  source 'api/header.sh'
+  page_html 'header' 'Предпросмотр сообщения'
+  echo "<div class=messages>"
+  make_post "$body" "$title" "$replyto" "$mode" "$nick"
+  echo "</div>"
+  page_html 'footer'
+elif [ -n "$mode" ] && [ -n "$replyto" ] && [ -z "$body" ]; then
+  source 'api/header.sh'
+  page_html 'header' 'Добавить сообщение'
+  page_html 'postform' "$replyto" "$mode"
+  page_html 'footer'
+elif [ -n "$mode" ] && [ -n "$replyto" ] && [ -n "$body" ]; then
+  source 'api/header.sh'
+  page_html 'header' 'Добавлено'
+  make_post_byparams "$body" "$title" "$replyto" "$mode"
+  page_html 'footer'
 fi
-
-title=$(make_safe $(param title))
-body=$(make_safe $(param body))
-date=$(get_time) 
-
-order=$(can_post "$mode" "$globalparent" "$nick")
-
-if [ "$order" == 'yes' ]; then
-  newid=$(insert_post "$title" "$body" "$tags" "$date" "$nick" "$mode" "$globalparent" "$parent")
-  source 'api/redirect.sh' "gopost.sh?id=$newid"
-else
-  fail_addpost
-fi
-
-function fail_addpost {
-    page_html 'header' 'failed'
-    echo '<b>failed</b>'
-    page_html 'footer'
-    exit
-}
-

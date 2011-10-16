@@ -33,11 +33,12 @@ function page_html {
 # $2 - title for header mode
 
   if [ "$1" == 'header' ]; then
-    if [ -z "$2" ]; then
-      title="$TITLE"
-    else
-      title="$TITLE: $2"
+    local title
+    title="$TITLE"
+    if [ -n "$2" ]; then
+      title="$title: $2"
     fi
+    
     cat 'html/header.html' | sed -e "s/@@TITLE@@/$title/"
     echo '<div id="doc3" class="yui-t5">'
     echo '<div id=hd>'
@@ -47,10 +48,6 @@ function page_html {
   elif [ "$1" == 'footer' ]; then
     echo '</div>'
     cat 'html/footer.html'
-  elif [ "$1" == 'addpost' ]; then
-    cat 'html/addpost.html'
-  elif [ "$1" == 'login' ]; then
-    cat 'html/login.html'
   elif [ "$1" == 'post' ]; then
 
     local post_html
@@ -64,6 +61,27 @@ function page_html {
     post_html="${post_html//"'DATE'"/$date}"
   
     echo -e "$post_html"
+  elif [ "$1" == 'postform' ]; then
+   
+    local post_html
+    post_html=$(cat 'html/postform.html')
+
+    post_html="${post_html//"'REPLY-TO'"/$2}"
+    post_html="${post_html//"'MODE'"/$3}"
+
+    echo -e "$post_html"
+  else
+    cat "$(make_safe html/$1.html)" #i'm paranoic, sorry
   fi
 
 }
+
+function fail_operation {
+
+    source 'api/header.sh'
+    page_html 'header' 'failed'
+    echo "<b>failed $1</b>"
+    page_html 'footer'
+    exit
+}
+

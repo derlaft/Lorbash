@@ -23,7 +23,7 @@ echo "<b>User-ID</b>: $id<br>"
 echo "<b>Nickname</b>: $nickname<br>"
 
 u_state=$(get_user_param 'state' $nick)
-if [ "$nick" == "$nickname" ] || [ "$u_state" == 'moderator' ] ; then
+if [ "$nick" == "$nickname" ] || [ "$u_state" == 'moderator' ] && [ "$nick" != 'anonymous' ] ; then
   echo "<b>Score</b>: $score<br>"
 fi
 

@@ -20,7 +20,7 @@ function get_time_string {
 }
 
 function make_safe {
-  echo "$@" | sed -e 's/</&lt\;/g;s/>/&gt\;/g;s/&/&amp\;/g;s/-/&ndash\;/g' 
+  echo "$@" | sed -e 's/\&/\&amp/g' | sed -e 's/</\&lt\;/g;s/>/\&gt\;/g;'
 }
 
 function get_title {
@@ -32,8 +32,12 @@ function get_title {
 
 function check_post {
   
-  type=$(sqlite3 "$DBFILE" "SELECT type FROM posts WHERE id='$1'")
-  echo "$type"
+  sqlite3 "$DBFILE" "SELECT type FROM posts WHERE id='$1'"
+}
+
+function check_forum {
+  
+  sqlite3 "$DBFILE" "SELECT id FROM forums WHERE id='$1'"
 }
 
 function get_gparent {
@@ -57,7 +61,7 @@ function get_post_vars {
     if [ -n "$parent" ] && [ "$type" == 'post' ]; then
 
       parent_author=$(sqlite3 "$DBFILE" "SELECT author FROM posts WHERE id='$parent'")
-      parent_date=$(get_time_string $(sqlite3 "$DBFILE" "SELECT date FROM posts WHERE id='$parent'"))
+      parent_date=$(get_time_string $(sqlite3 "$DBFILE" "SELECT data FROM posts WHERE id='$parent'"))
     fi
 
     if [ "$type" == "deleted_post" ] || [ "$type" == "deleted_thread" ]; then
@@ -87,52 +91,18 @@ function get_user_param {
   sqlite3 "$DBFILE" "SELECT $1 FROM users WHERE nick='$2'"  
 }
 
-function can_post {
-
-#usage:
-# post type
-# parent id
-# sender score
-
-
-  if [ "$1" == 'thread' ]; then
-    local checked_id
-    local min_score
-    local score
-    local state
-
-    checked_id=$(sqlite3 "$DBFILE" "SELECT id FROM forums WHERE id='$2'")
-    min_score=$(sqlite3 "$DBFILE" "SELECT minscore FROM forums WHERE id='$2'")
-    score=$(get_user_param 'score' $3)
-    state=$(get_user_param 'state' $3)
-
-    if [ "$checked_id" == "$2" ]; then
-      if [ -n "$min_score" ]; then
-        if (( "$min_score" >= "$score" )) || [ "$state" == "moderator" ]; then
-          echo 'yes'
-        else
-          echo 'no'
-        fi
-      else
-        echo 'yes'
-      fi
-    else
-      echo 'no'    
-    fi
-  elif [ "$1" == 'post' ]; then
-    can_post 'thread' $(get_gparent "$2") "$3"
-  fi
-}
-
 function insert_post {
-#params:
-# title, body, tags, date, author, type, globalparent, parent
 
-  rows='(title, body, tags, data, author, type, globalparent, parent)'
-  values="('$1', '$2', '$3', '$4', '$5', '$6', '$7', '$8')"
+  local body="$1"
+  local title="$2"
+  local parent="$3"
+  local globalparent="$4"
+  local type="$5"
+  local date="$(get_time)"
+  local author="$nick"
 
-  sqlite3 "$DBFILE" "insert into posts $rows values $values"
+  vals='(body, title, parent, globalparent, type, data, author)'
+  set="('$body', '$title', '$parent', '$globalparent', '$type', '$date', '$author')"
 
-#we did it!
-
+  sqlite3 "$DBFILE" "INSERT INTO posts $vals VALUES $set"
 }
