@@ -1,0 +1,23 @@
+<h1>Добавить</h1>
+<form id="messageForm" action="addpost.sh" method="POST" enctype="application/x-www-form-urlencoded">
+  <input type="hidden" name="replyto" value="'REPLY-TO'">
+  <input type="hidden" name="mode" value="'MODE'">
+
+  <label>Заголовок:
+    <input id="title" name="title" class="required" type="text" value="" size="40"/><br>
+   </label>
+
+  
+
+  
+
+<label for="body_txt">Сообщение:</label><br>
+
+<textarea id="body_txt" name="body" rows="20" cols="70"></textarea><br>
+
+<br>
+
+<input type=submit value="Поместить">
+<input type=submit name=preview value="Предпросмотр">
+</form>
+
