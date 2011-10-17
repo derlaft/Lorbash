@@ -39,6 +39,6 @@ elif [ -n "$mode" ] && [ -n "$replyto" ] && [ -n "$body" ]; then
     source 'api/redirect.sh' "/gopost.sh?id=$(get_last_postid)"
   else
     source 'api/header.sh'
-    echo "mode:'$mode',replyto:'$replyto',parent:'$parent'"
+    echo "$r"
   fi
 fi

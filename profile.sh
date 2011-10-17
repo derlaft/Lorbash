@@ -12,6 +12,8 @@ source 'api/core.sh' 'header'
 nickname=$(param nick)
 
 page_html 'header' "$nickname\'s profile"
+echo '<div id="bd">'
+
 get_user_vars "$nickname"
 
 if [ -z $id ]; then
@@ -36,6 +38,7 @@ if [ -n "$reg" ]; then
   echo "<b>Reg-Date</b>: $(get_time_string $reg)<br>"
 fi
 
+echo '</div>'
 cat 'html/footer.html'
 
 #so..

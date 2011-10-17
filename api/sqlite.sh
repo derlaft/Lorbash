@@ -57,8 +57,8 @@ function get_post_vars {
   
   if [ -n $(make_number $1) ]; then
 
-    body=$(sqlite3 "$DBFILE" "SELECT body FROM posts WHERE id='$post_id'")
-    title=$(sqlite3 "$DBFILE" "SELECT title FROM posts WHERE id='$post_id'")
+    body=$(sqlite3 "$DBFILE" "SELECT body FROM posts WHERE id='$post_id'" | sed -e 's/\[br\]/\<br\>/g')
+    title=$(sqlite3 "$DBFILE" "SELECT title FROM posts WHERE id='$post_id'" | sed -e 's/\[br\]//g')
     parent=$(make_number $(sqlite3 "$DBFILE" "SELECT parent FROM posts WHERE id='$post_id'"))
     type=$(sqlite3 "$DBFILE" "SELECT type FROM posts WHERE id='$post_id'")
   
@@ -66,6 +66,7 @@ function get_post_vars {
 
       parent_author=$(sqlite3 "$DBFILE" "SELECT author FROM posts WHERE id='$parent'")
       parent_date=$(get_time_string $(sqlite3 "$DBFILE" "SELECT data FROM posts WHERE id='$parent'"))
+      parent_type=$(sqlite3 "$DBFILE" "SELECT type FROM posts WHERE id='$parent'")
     fi
 
     if [ "$type" == "deleted_post" ] || [ "$type" == "deleted_thread" ]; then

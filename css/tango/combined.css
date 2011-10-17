@@ -29,10 +29,10 @@ sub{vertical-align:text-bottom}
 input,textarea,select{font-size:inherit;font-weight:inherit}
 input,textarea,select{*font-size:100%}
 legend{color:#000}
-body{font:13px / 1.231 arial,helvetica,clean,sans-serif;*font-size:small;*font:x-small}
+body{*font-size:small;*font:x-small}
 table{font-size:inherit;font:100%}
 pre,code,kbd,samp,tt{font-family:monospace}
-
+body{text-align:center}
 #ft{clear:both}
 #doc3,.yui-t5{text-align:left;min-width:300px}
 #doc3{margin:auto;width:auto}
@@ -49,10 +49,11 @@ h2{font-size:1.3em}
 em{font-style:italic}
 strong{font-weight:bold}
 body{font-family:Trebuchet MS,sans-serif;font-size:medium;padding:8px;line-height:1.4}
+textarea{font-family:Trebuchet MS,sans-serif}
 p{margin-bottom:1em}
 #hd{padding-left:1em}
 #hd h1{font-size:2em;font-weight:bold;padding-top:.5em}
-#hd .menu{text-align:left;margin-top:1em;margin-bottom:1em}
+#hd .menu{text-align:center;margin-top:1em;margin-bottom:1em}
 #hd .menu li:after{content:" |"}
 #hd .menu li.last:after{content:" "}
 #hd .menu li{display:inline}
@@ -101,3 +102,4 @@ input[type="checkbox"]{margin-left:3px;margin-right:3px}
 .boxlet h3{margin-bottom:.5em}
 .infoblock{-moz-border-radius:1em;-webkit-border-radius:1em;-khtml-border-radius:1em;border-radius:1em;border:0;margin-bottom:1em}
 .boxlet H3{margin-bottom:5px}
+
