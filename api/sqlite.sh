@@ -20,7 +20,11 @@ function get_time_string {
 }
 
 function make_safe {
-  echo "$@" | sed -e 's/\&/\&amp/g' | sed -e 's/</\&lt\;/g;s/>/\&gt\;/g;'
+  if [ "$2" == 'body' ]; then
+    echo -e "$@" | sed -e 's/\&/\&amp/g' | sed -e 's/</\&lt\;/g;s/>/\&gt\;/g;s/\[br\]/\<br\>/g;' 
+  else
+    echo -e "$@" | sed -e 's/\&/\&amp/g' | sed -e 's/</\&lt\;/g;s/>/\&gt\;/g' 
+  fi
 }
 
 function get_title {
@@ -77,6 +81,14 @@ function get_post_vars {
   fi
 }
 
+function get_parent_info {
+  
+  parent_type=$(sqlite3 "$DBFILE" "SELECT type FROM posts WHERE id='$parent'")
+  parent_author=$(sqlite3 "$DBFILE" "SELECT author FROM posts WHERE id='$parent'")
+  parent_date=$(get_time_string $(sqlite3 "$DBFILE" "SELECT data FROM posts WHERE id='$parent'"))
+  
+}
+
 function get_user_vars {
 
   id=$(get_user_param 'id' $1)
@@ -105,4 +117,8 @@ function insert_post {
   set="('$body', '$title', '$parent', '$globalparent', '$type', '$date', '$author')"
 
   sqlite3 "$DBFILE" "INSERT INTO posts $vals VALUES $set"
+}
+
+function get_last_postid {
+  sqlite3 "$DBFILE" "SELECT id FROM posts ORDER BY id desc LIMIT 1"
 }

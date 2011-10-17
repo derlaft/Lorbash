@@ -28,7 +28,7 @@ function get_post {
   
   get_post_vars "$post_id"
   
-  if [ -z "$body" ] && [ -z "$title" ]; then
+  if [ -z "$body" ] || [ -z "$title" ]; then
     echo 'invalid post'
     return
   fi
@@ -49,10 +49,10 @@ function get_post {
 
 function make_post {
 
-  local body="$1"
-  local title="$2"
-  local parent="$3"
-  local type="$4"
+  local body=$(make_safe "$1")
+  local title=$(make_safe "$2")
+  local parent=$(make_number "$3")
+  local type=$(make_safe "$4")
   local parent_author
   local parent_date
   local answer
@@ -72,7 +72,9 @@ function get_post_params {
     return
   fi
 
-  if [ "$type" == "post" ] && [ -n "$parent" ] && [ "$globalparent" != "$parent" ]; then
+  get_parent_info
+
+  if [ "$parent_type" == "post" ]; then
     answer="Ответ на <a href=\"gopost.sh?id=$parent\">комментарий</a> $parent_author от $parent_date"
   fi
 
@@ -83,7 +85,7 @@ function get_post_params {
 
 function make_post_byparams {
 
-  local body=$(make_safe "$1")
+  local body=$(make_safe "$1" "body")
   local title=$(make_safe "$2")
   local parent=$(make_number "$3")
   local type=$(make_safe "$4")
@@ -92,13 +94,14 @@ function make_post_byparams {
   #parent and globalparent
   local globalparent
 
-  globalparent=$( get_gparent "$parent" "$type" "$parent" )
+  globalparent=$( get_gparent "$parent")
   
-  if [ "$type" == 'post' ] && [ -z "$(check_post $globalparent)" ] || \
-     [ "$type" == 'thread' ] && [ -z "$(check_forum $globalparent)" ]; then 
-       echo '403'
+  if [ "$type" == 'post' ] && [ -n "$(check_post $globalparent)" ] || \
+     [ "$type" == 'thread' ] && [ -n "$(check_forum $globalparent)" ]; then 
+           insert_post "$body" "$title" "$parent" "$globalparent" "$type"
+           echo 'ok'
   else
-    insert_post "$body" "$title" "$parent" "$globalparent" "$type"
+    echo '403'
   fi
 }
 

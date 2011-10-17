@@ -61,7 +61,7 @@ if [ -n "${QUERY_STRING}" ]; then
       #
       tmpvalue=${Q#*=}
       tmpvalue=$(echo ${tmpvalue} | \
-                 sed -e 's/%\(\)/\\\x/g' | \
+                 sed -e 's/%0D%0A/[br]/g;s/%\(\)/\\\x/g' | \
                  tr "+" " ")
       #echo "Intermediate \$value: ${QUERY_STRING}" 1>&2
   
@@ -74,7 +74,7 @@ if [ -n "${QUERY_STRING}" ]; then
           g=$(printf "${i}")
           value="${value}${g}"
       done
-      #value=$(echo ${value})
+      #value=$(echo -e ${value})
   
       eval "export FORM_${name}='${value}'"
     done

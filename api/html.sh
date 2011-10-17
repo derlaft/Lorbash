@@ -52,6 +52,8 @@ function page_html {
 
     local post_html
     post_html=$(cat 'html/post.html')
+
+    body=$( echo -e "$body" | sed -e 's/\n/<br>/g' )
   
     post_html="${post_html//"'POST-ID'"/$post_id}"
     post_html="${post_html//"'ANSWER'"/$answer}"
@@ -59,6 +61,8 @@ function page_html {
     post_html="${post_html//"'BODY'"/$body}"
     post_html="${post_html//"'AUTHOR-LINK'"/$author_link}"
     post_html="${post_html//"'DATE'"/$date}"
+
+
   
     echo -e "$post_html"
   elif [ "$1" == 'postform' ]; then
@@ -68,6 +72,10 @@ function page_html {
 
     post_html="${post_html//"'REPLY-TO'"/$2}"
     post_html="${post_html//"'MODE'"/$3}"
+
+    
+    post_html="${post_html//"'TITLE'"/$4}"
+    post_html="${post_html//"'BODY'"/$5}"
 
     echo -e "$post_html"
   else
